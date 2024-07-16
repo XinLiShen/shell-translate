@@ -6,7 +6,7 @@
 ## get start
 
 - get [baiduAPI](https://api.fanyi.baidu.com/product/12)
-- fill app_id,key,, in main.py
+- fill app_id,key,domain,salt(option) in main.py
 
 - try it
     ```dash
