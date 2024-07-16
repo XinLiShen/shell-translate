@@ -6,10 +6,10 @@ import requests
 
 app_id = '' # needed
 key = '' # needed
-salt = '' # needed
+salt = 'salt' # it can be anything
 l_from = ''
 l_to = ''
-domain = '' # needed
+domain = 'it' # needed, the filed you want
 
 def is_english(ch):
     return ch.isalpha() and unicodedata.name(ch).startswith('LATIN')
@@ -38,12 +38,6 @@ def getQ():
         if arg == sys.argv[0]:
             continue
         ans += arg
-    if tec_laungrage(ans):
-        l_from = 'zh'
-        l_to = 'en'
-    else:
-        l_from = 'en'
-        l_to = 'zh'
     return ans
 
 def s2md5(sign):
@@ -61,6 +55,12 @@ def httpC(url):
         return dst
 
 def tran(q):
+    if tec_laungrage(q):
+        l_from = 'zh'
+        l_to = 'en'
+    else:
+        l_from = 'en'
+        l_to = 'zh'
     sign = app_id + q + salt + domain + key
     sign = s2md5(sign)
     url = 'http://api.fanyi.baidu.com/api/trans/vip/fieldtranslate' +   \
@@ -73,7 +73,12 @@ def tran(q):
     '&sign=' + sign
     res = httpC(url)
     print(res)
+    return res
 
-q = getQ();
-if q != None:
-    tran(q)
+def main():
+    q = getQ();
+    if q != None:
+        tran(q)
+
+if __name__ == "__main__":
+    main()
